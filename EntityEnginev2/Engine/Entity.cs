@@ -100,9 +100,20 @@ namespace EntityEnginev2.Engine
             if (DestroyEvent != null)
                 DestroyEvent(this);
         }
-
         public virtual void ParseXml(XmlParser xp)
         {
+            foreach (var c in this)
+            {
+                c.ParseXml(xp);
+            }
+        }
+
+        public virtual void ParseXml(XmlParser xp, string path)
+        {
+            foreach (var c in this)
+            {
+                c.ParseXml(xp, path);
+            }
         }
     }
 }

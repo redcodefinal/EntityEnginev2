@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EntityEnginev2.Data;
 using EntityEnginev2.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -39,9 +40,9 @@ namespace EntityEnginev2.Engine
         {
             Game = game;
             SpriteBatch = spriteBatch;
-
+            GameTime = new GameTime();
             game.Components.Add(new InputHandler(game));
-
+            Assets.LoadConent(game);
             Paused = false;
 
             Viewport = viewport;

@@ -13,5 +13,6 @@ namespace EntityEnginev2.Engine
         void Draw(SpriteBatch sb);
         void Destroy();
         void ParseXml(XmlParser xp);
+        void ParseXml(XmlParser xp, string path);
     }
 }

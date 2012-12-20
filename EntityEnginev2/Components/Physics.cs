@@ -51,26 +51,25 @@ namespace EntityEnginev2.Components
             Entity.GetComponent<Body>().Angle = (float)Math.Atan2(velocity.X, velocity.Y);
         }
 
-        public override void ParseXml(XmlParser xmlparser)
+        public override void ParseXml(XmlParser xp, string path)
         {
-            string rootnode = xmlparser.GetRootNode();
-            rootnode = rootnode + "->" + Name + "->";
+            string rootnode = path + "->" + Name + "->";
 
             try
             {
-                Drag = xmlparser.GetFloat(rootnode + "Drag");
+                Drag = xp.GetFloat(rootnode + "Drag");
             }
             catch { }
 
             try
             {
-                AngularVelocity = xmlparser.GetFloat(rootnode + "AngularVelocity");
+                AngularVelocity = xp.GetFloat(rootnode + "AngularVelocity");
             }
             catch { }
 
             try
             {
-                Velocity = xmlparser.GetVector2(rootnode + "Velocity");
+                Velocity = xp.GetVector2(rootnode + "Velocity");
             }
             catch { }
         }

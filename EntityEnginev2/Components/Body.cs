@@ -24,19 +24,19 @@ namespace EntityEnginev2.Components
             Position = position;
         }
 
-        public override void ParseXml(XmlParser xmlparser)
+        public override void ParseXml(XmlParser xp, string path)
         {
-            string rootnode = xmlparser.GetRootNode();
-            rootnode = rootnode + "->" + Name + "->";
+            base.ParseXml(xp, path);
+            string rootnode = path + "->" + Name + "->";
             try
             {
-                Position = xmlparser.GetVector2(rootnode + "Position");
+                Position = xp.GetVector2(rootnode + "Position");
             }
             catch { }
 
             try
             {
-                Angle = xmlparser.GetFloat(rootnode + "Angle");
+                Angle = xp.GetFloat(rootnode + "Angle");
             }
             catch { }
 

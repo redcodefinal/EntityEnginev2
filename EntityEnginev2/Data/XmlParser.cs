@@ -113,5 +113,14 @@ namespace EntityEnginev2.Data
         {
             return Convert.ToBoolean(GetString(tag));
         }
+
+        public Rectangle GetRectangle(string tag)
+        {
+            int x = GetInt(tag + "->X");
+            int y = GetInt(tag + "->Y");
+            int width = GetInt(tag + "->Width");
+            int height = GetInt(tag + "->Height");
+            return new Rectangle(x, y, width, height);
+        }
     }
 }

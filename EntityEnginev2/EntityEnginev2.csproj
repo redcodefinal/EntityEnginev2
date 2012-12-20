@@ -92,12 +92,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Animation.cs" />
     <Compile Include="Components\Body.cs" />
     <Compile Include="Components\Collision.cs" />
+    <Compile Include="Components\Emitter.cs" />
     <Compile Include="Components\Health.cs" />
     <Compile Include="Components\ImageRender.cs" />
     <Compile Include="Components\Physics.cs" />
     <Compile Include="Components\Render.cs" />
+    <Compile Include="Components\TextRender.cs" />
+    <Compile Include="Components\TileRender.cs" />
+    <Compile Include="Components\Timer.cs" />
+    <Compile Include="Data\Assets.cs" />
+    <Compile Include="Data\RandomExtentions.cs" />
     <Compile Include="Engine\Component.cs" />
     <Compile Include="Engine\Entity.cs" />
     <Compile Include="Data\Error.cs" />
@@ -105,11 +112,14 @@
     <Compile Include="Engine\IComponent.cs" />
     <Compile Include="Engine\EntityGame.cs" />
     <Compile Include="Engine\EntityState.cs" />
+    <Compile Include="GUI\Image.cs" />
+    <Compile Include="GUI\Text.cs" />
     <Compile Include="Input\DoubleInput.cs" />
     <Compile Include="Input\GamePadInput.cs" />
     <Compile Include="Input\Input.cs" />
     <Compile Include="Input\InputHandler.cs" />
     <Compile Include="Input\KeyboardInput.cs" />
+    <Compile Include="Object\Particle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

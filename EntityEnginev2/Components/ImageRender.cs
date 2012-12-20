@@ -28,7 +28,7 @@ namespace EntityEnginev2.Components
                 }
                 catch 
                 {
-                    Error.Exception("Body should not be null!", Entity);
+                    Error.Exception(Name + ": Body should not be null!", Entity);
                     return new Rectangle();
                 }
             } 
@@ -65,42 +65,19 @@ namespace EntityEnginev2.Components
             }
         }
 
-        public Texture2D LoadTexture(string location)
+        public void LoadTexture(string location)
         {
-            return Entity.StateRef.GameRef.Game.Content.Load<Texture2D>(location);
+            Texture = Entity.StateRef.GameRef.Game.Content.Load<Texture2D>(location);
         }
 
-        public override void ParseXml(XmlParser xmlparser)
+        public override void ParseXml(XmlParser xp, string path)
         {
-            string rootnode = xmlparser.GetRootNode() + "->" + Name + "->";
+            base.ParseXml(xp, path);
+            string rootnode = path + "->" + Name + "->";
 
             try
             {
-                Texture = LoadTexture(xmlparser.GetString(rootnode + "Texture"));
-            }
-            catch{}
-
-            try
-            {
-                Color = xmlparser.GetColor(rootnode + "Color");
-            }
-            catch {}
-
-            try
-            {
-                Alpha = xmlparser.GetFloat(rootnode + "Alpha");
-            }
-            catch{}
-
-            try
-            {
-                Scale = xmlparser.GetVector2(rootnode + "Scale");
-            }
-            catch{}
-
-            try
-            {
-                Layer = xmlparser.GetFloat(rootnode + "Layer");
+                LoadTexture(xp.GetString(rootnode + "Texture"));
             }
             catch{}
         }

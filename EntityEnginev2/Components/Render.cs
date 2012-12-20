@@ -26,5 +26,35 @@ namespace EntityEnginev2.Components
             : base(entity, name)
         {
         }
+
+        public override void ParseXml(Data.XmlParser xp, string path)
+        {
+            base.ParseXml(xp, path);
+
+            string rootnode = path + "->" + Name + "->";
+            try
+            {
+                Color = xp.GetColor(rootnode + "Color");
+            }
+            catch { }
+
+            try
+            {
+                Alpha = xp.GetFloat(rootnode + "Alpha");
+            }
+            catch { }
+
+            try
+            {
+                Scale = xp.GetVector2(rootnode + "Scale");
+            }
+            catch { }
+
+            try
+            {
+                Layer = xp.GetFloat(rootnode + "Layer");
+            }
+            catch { }
+        }
     }
 }

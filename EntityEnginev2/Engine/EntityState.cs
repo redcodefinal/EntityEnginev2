@@ -34,7 +34,7 @@ namespace EntityEnginev2.Engine
             return (T)result;
         }
 
-        public void AddEntity(Entity e)
+        public virtual void AddEntity(Entity e)
         {
             if (this.Any(entity => e.Name == entity.Name))
             {
@@ -49,7 +49,7 @@ namespace EntityEnginev2.Engine
                 EntityAdded(e);
         }
 
-        public void RemoveEntity(Entity e)
+        public virtual void RemoveEntity(Entity e)
         {
             if(Contains(e))
             {

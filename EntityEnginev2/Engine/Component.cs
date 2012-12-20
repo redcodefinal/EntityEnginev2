@@ -33,6 +33,13 @@ namespace EntityEnginev2.Engine
 
         public virtual void ParseXml(XmlParser xp)
         {
+            string path = xp.GetRootNode();
+            ParseXml(xp, path);
+        }
+
+
+        public virtual void ParseXml(XmlParser xp, string path)
+        {
         }
     }
 }

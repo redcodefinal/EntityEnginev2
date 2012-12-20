@@ -46,13 +46,13 @@ namespace EntityEnginev2.Components
             }
         }
 
-        public override void ParseXml(XmlParser xmlparser)
+        public override void ParseXml(XmlParser xp, string path)
         {
-            string rootnode = xmlparser.GetRootNode();
-            rootnode = rootnode + "->" + Name + "->";
+            base.ParseXml(xp, path);
+            string rootnode = path + "->" + Name + "->";
             try
             {
-                HitPoints = xmlparser.GetInt(rootnode + "HitPoints");
+                HitPoints = xp.GetInt(rootnode + "HitPoints");
             }
             catch{}
         }
