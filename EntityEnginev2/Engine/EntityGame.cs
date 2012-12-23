@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityEnginev2.Data;
+﻿using EntityEnginev2.Data;
 using EntityEnginev2.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,8 +16,11 @@ namespace EntityEnginev2.Engine
         public Rectangle Viewport { get; protected set; }
 
         public Game Game { get; private set; }
+
         public SpriteBatch SpriteBatch { get; private set; }
+
         public GameTime GameTime { get; private set; }
+
         private EntityState _currentstate;
         public Color BGColor = Color.White;
 

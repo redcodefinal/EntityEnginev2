@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
@@ -15,7 +12,13 @@ namespace EntityEnginev2.Components
 
         public int Index;
 
-        public int Columns { get { return (int)(Texture.Width / TileSize.X); } }
+        public int Columns
+        {
+            get
+            {
+                return (int)(Texture.Width / TileSize.X);
+            }
+        }
 
         public int Rows { get { return (int)(Texture.Height / TileSize.Y); } }
 
@@ -32,7 +35,7 @@ namespace EntityEnginev2.Components
                         (int)(TileSize.X * Scale.X),
                         (int)(TileSize.Y * Scale.Y));
                 }
-                catch (Exception e)
+                catch
                 {
                     Error.Exception(Name + ": Body should not be null!", Entity);
                     return new Rectangle();
@@ -57,6 +60,7 @@ namespace EntityEnginev2.Components
                 return r;
             }
         }
+
         public TileRender(Entity e, string name)
             : base(e, name)
         {
@@ -78,18 +82,8 @@ namespace EntityEnginev2.Components
         {
             base.ParseXml(xp, path);
             string rootnode = path + "->" + Name + "->";
-            try
-            {
-                TileSize = xp.GetVector2(rootnode + "TileSize");
-            }
-            catch { }
-
-            try
-            {
-                Index = xp.GetInt(rootnode + "Index");
-            }
-            catch { }
+            TileSize = xp.GetVector2(rootnode + "TileSize", Vector2.Zero);
+            Index = xp.GetInt(rootnode + "Index", 0);
         }
-
     }
 }

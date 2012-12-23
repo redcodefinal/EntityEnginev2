@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Concurrent;
 
 using System.Linq;
 using EntityEnginev2.Data;
@@ -12,14 +11,16 @@ namespace EntityEnginev2.Engine
         public delegate void ComponentEventHandler(Component c);
 
         public event ComponentEventHandler ComponentAdded;
+
         public event ComponentEventHandler ComponentRemoved;
 
         public delegate void EntityEventHandler(Entity e);
 
         public EntityEventHandler CreateEvent;
         public EntityEventHandler DestroyEvent;
- 
+
         public string Name { get; private set; }
+
         public EntityState StateRef { get; private set; }
 
         public Entity(EntityState es, string name)
@@ -27,7 +28,6 @@ namespace EntityEnginev2.Engine
             Name = name;
             StateRef = es;
         }
-
 
         public T GetComponent<T>(string name) where T : Component
         {
@@ -41,7 +41,7 @@ namespace EntityEnginev2.Engine
         {
             var result = this.FirstOrDefault(c => c is T && c.Default) ??
                          this.FirstOrDefault(c => c is T);
-            if(result == null)
+            if (result == null)
                 Error.Exception("Component of type " + typeof(T) + " does not exist.", this);
             return (T)result;
         }
@@ -70,7 +70,7 @@ namespace EntityEnginev2.Engine
 
         public virtual void Update()
         {
-            foreach (var component in ToArray())
+            foreach (var component in this.ToList().Where(component => component.Active))
             {
                 component.Update();
             }
@@ -78,7 +78,7 @@ namespace EntityEnginev2.Engine
 
         public virtual void Draw(SpriteBatch sb)
         {
-            foreach (var component in ToArray())
+            foreach (var component in this.ToList().Where(component => component.Active))
             {
                 component.Draw(sb);
             }
@@ -92,7 +92,7 @@ namespace EntityEnginev2.Engine
 
         public virtual void Destroy(Entity e = null)
         {
-            foreach (var component in ToArray())
+            foreach (var component in this.ToList())
             {
                 component.Destroy();
             }
@@ -100,6 +100,12 @@ namespace EntityEnginev2.Engine
             if (DestroyEvent != null)
                 DestroyEvent(this);
         }
+
+        public void Destroy()
+        {
+            Destroy(null);
+        }
+
         public virtual void ParseXml(XmlParser xp)
         {
             foreach (var c in this)

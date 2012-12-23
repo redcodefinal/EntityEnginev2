@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using EntityEnginev2.Data;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,17 +12,18 @@ namespace EntityEnginev2.Engine
         public event EventHandler ChangeState;
 
         public event Entity.EntityEventHandler EntityRemoved;
+
         public event Entity.EntityEventHandler EntityAdded;
 
         public string Name { get; private set; }
+
         public EntityGame GameRef { get; private set; }
 
-        public EntityState(EntityGame eg, string name)
+        public EntityState(EntityGame stg, string name)
         {
-            GameRef = eg;
+            GameRef = stg;
             Name = name;
         }
-
 
         public T GetEntity<T>(string name) where T : Entity
         {
@@ -51,17 +50,17 @@ namespace EntityEnginev2.Engine
 
         public virtual void RemoveEntity(Entity e)
         {
-            if(Contains(e))
+            if (Contains(e))
             {
                 Remove(e);
-                if(EntityRemoved!=null)
+                if (EntityRemoved != null)
                     EntityRemoved(e);
             }
         }
 
         public virtual void Update()
         {
-            foreach (var entity in ToArray())
+            foreach (var entity in this.ToList())
             {
                 entity.Update();
             }
@@ -69,7 +68,7 @@ namespace EntityEnginev2.Engine
 
         public virtual void Draw(SpriteBatch sb)
         {
-            foreach (var entity in ToArray())
+            foreach (var entity in this.ToList())
             {
                 entity.Draw(sb);
             }
@@ -77,7 +76,7 @@ namespace EntityEnginev2.Engine
 
         public virtual void Destroy()
         {
-            foreach (var entity in ToArray())
+            foreach (var entity in this.ToList())
             {
                 entity.Destroy();
             }
@@ -85,7 +84,6 @@ namespace EntityEnginev2.Engine
 
         public virtual void Start()
         {
-            
         }
 
         public virtual void Reset()
@@ -93,13 +91,13 @@ namespace EntityEnginev2.Engine
             Clear();
         }
 
-        public void ChangeToState(string name)
+        public virtual void ChangeToState(string name)
         {
             if (ChangeState != null)
                 ChangeState(name);
         }
 
-        public void Show(string name)
+        public virtual void Show(string name)
         {
             if (name == Name)
                 Show();

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityEnginev2.Data;
+﻿using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace EntityEnginev2.Components
@@ -13,7 +10,25 @@ namespace EntityEnginev2.Components
         public string Text;
         public SpriteFont Font;
 
-        public TextRender(Entity entity, string name) : base(entity, name)
+        public override Rectangle DrawRect
+        {
+            get
+            {
+                Vector2 position;
+                try
+                {
+                    position = Entity.GetComponent<Body>().Position;
+                }
+                catch
+                {
+                    position = Vector2.Zero;
+                }
+                return new Rectangle((int)position.X, (int)position.Y, (int)Font.MeasureString(Text).X, (int)Font.MeasureString(Text).Y);
+            }
+        }
+
+        public TextRender(Entity entity, string name)
+            : base(entity, name)
         {
         }
 
@@ -26,7 +41,8 @@ namespace EntityEnginev2.Components
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.DrawString(Font, Text, Entity.GetComponent<Body>().Position, Color * Alpha, Entity.GetComponent<Body>().Angle, Origin, Scale, Flip, Layer);
+            sb.DrawString(Font, Text, Entity.GetComponent<Body>().Position, Color * Alpha,
+                          Entity.GetComponent<Body>().Angle, Origin, Scale, Flip, Layer);
         }
 
         public void LoadFont(string location)
@@ -38,17 +54,9 @@ namespace EntityEnginev2.Components
         {
             base.ParseXml(xp, path);
             string rootnode = path + "->" + Name + "->";
-            try
-            {
-                LoadFont(xp.GetString(rootnode + "Font"));
-            }
-            catch{}
 
-            try
-            {
-                Text = xp.GetString(rootnode + "Text");
-            }
-            catch { }
+            LoadFont(xp.GetString(rootnode + "Font", "FontNotSet"));
+            Text = xp.GetString(rootnode + "Text", "");
         }
     }
 }

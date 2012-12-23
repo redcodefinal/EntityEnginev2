@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityEnginev2.Data;
+﻿using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,39 +9,39 @@ namespace EntityEnginev2.Components
     {
         public Texture2D Texture { get; set; }
 
-        public override Rectangle DrawRect 
-        { 
+        public override Rectangle DrawRect
+        {
             get
             {
                 try
                 {
                     Vector2 position = Entity.GetComponent<Body>().Position;
                     return new Rectangle(
-                        (int)((int)position.X + Origin.X*Scale.X), 
-                        (int)((int)position.Y + Origin.Y*Scale.Y), 
+                        (int)((int)position.X + Origin.X * Scale.X),
+                        (int)((int)position.Y + Origin.Y * Scale.Y),
                         (int)(Texture.Width * Scale.X),
                         (int)(Texture.Height * Scale.Y));
                 }
-                catch 
+                catch
                 {
                     Error.Exception(Name + ": Body should not be null!", Entity);
                     return new Rectangle();
                 }
-            } 
+            }
         }
 
         public override Vector2 Bounds
         {
             get { return new Vector2(Texture.Width, Texture.Height); }
         }
-        
+
         public ImageRender(Entity e, string name)
             : base(e, name)
         {
             Origin = Vector2.Zero;
         }
 
-        public ImageRender(Entity e, string name,Texture2D texture)
+        public ImageRender(Entity e, string name, Texture2D texture)
             : base(e, name)
         {
             Texture = texture;
@@ -74,12 +70,7 @@ namespace EntityEnginev2.Components
         {
             base.ParseXml(xp, path);
             string rootnode = path + "->" + Name + "->";
-
-            try
-            {
-                LoadTexture(xp.GetString(rootnode + "Texture"));
-            }
-            catch{}
+            LoadTexture(xp.GetString(rootnode + "Texture", "TextureNotSet"));
         }
     }
 }

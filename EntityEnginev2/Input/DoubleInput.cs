@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using EntityEnginev2.Engine;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace EntityEnginev2.Input
@@ -8,10 +9,10 @@ namespace EntityEnginev2.Input
         public KeyboardInput Key;
         public GamePadInput Button;
 
-        public DoubleInput(Keys key, Buttons button, PlayerIndex pi)
+        public DoubleInput(Entity e, string name, Keys key, Buttons button, PlayerIndex pi) : base(e, name)
         {
-            Key = new KeyboardInput(key);
-            Button = new GamePadInput(button, pi);
+            Key = new KeyboardInput(e, name + "key", key);
+            Button = new GamePadInput(e, name + "gamepad", button, pi);
         }
 
         public override bool Pressed()

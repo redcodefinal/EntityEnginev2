@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
@@ -13,10 +10,11 @@ namespace EntityEnginev2.Components
     {
         public Vector2 TileSize;
         public int FramesPerSecond;
+
         public int CurrentFrame { get; set; }
-        public string Key;
 
         public event Timer.TimerEvent LastFrameEvent;
+
         public Timer FrameTimer;
 
         public bool HitLastFrame
@@ -50,18 +48,19 @@ namespace EntityEnginev2.Components
                 {
                     Vector2 position = Entity.GetComponent<Body>().Position;
                     return new Rectangle(
-                        (int)(position.X + Origin.X * Scale.X), 
-                        (int)(position.Y + Origin.Y * Scale.Y), 
-                        (int)(TileSize.X * Scale.X), 
+                        (int)(position.X + Origin.X * Scale.X),
+                        (int)(position.Y + Origin.Y * Scale.Y),
+                        (int)(TileSize.X * Scale.X),
                         (int)(TileSize.Y * Scale.Y));
                 }
-                catch (Exception e)
+                catch
                 {
                     Error.Exception(Name + ": Body should not be null!", Entity);
                     return new Rectangle();
                 }
             }
         }
+
         public override Vector2 Bounds
         {
             get { return new Vector2(TileSize.X, TileSize.Y); }
@@ -75,16 +74,14 @@ namespace EntityEnginev2.Components
 
             Origin = new Vector2(TileSize.X / 2.0f, TileSize.Y / 2.0f);
 
-            FrameTimer = new Timer(e, Name+".FrameTimer") {Milliseconds = MillisecondsPerFrame};
+            FrameTimer = new Timer(e, Name + ".FrameTimer") { Milliseconds = MillisecondsPerFrame };
             FrameTimer.LastEvent += AdvanceNextFrame;
         }
 
         public Animation(Entity e, string name)
             : base(e, name)
         {
-            Origin = new Vector2(TileSize.X / 2.0f, TileSize.Y / 2.0f);
-
-            FrameTimer = new Timer(e, Name + ".FrameTimer");
+            FrameTimer = new Timer(e, "FrameTimer");
             FrameTimer.LastEvent += AdvanceNextFrame;
         }
 
@@ -110,6 +107,7 @@ namespace EntityEnginev2.Components
             if (CurrentFrame >= Tiles)
                 CurrentFrame = 0;
         }
+
         public void AdvanceLastFrame()
         {
             CurrentFrame--;
@@ -127,17 +125,14 @@ namespace EntityEnginev2.Components
             FrameTimer.Stop();
         }
 
-        public override void ParseXml(XmlParser xp)
+        public override void ParseXml(XmlParser xp, string path)
         {
-            base.ParseXml(xp);
-            string rootnode = xp.GetRootNode();
-            rootnode = rootnode + "->" + Name + "->";
-
-            TileSize = xp.GetVector2(rootnode + "TileSize");
-            FramesPerSecond = xp.GetInt(rootnode + "FramesPerSecond");
-            CurrentFrame = xp.GetInt(rootnode + "CurrentFrame");
-            Key = xp.GetString(rootnode + "Key");
-
+            base.ParseXml(xp, path);
+            string rootnode = path + "->" + Name + "->";
+            FrameTimer.ParseXml(xp, path + "->" + Name);
+            TileSize = xp.GetVector2(rootnode + "TileSize", Vector2.Zero);
+            FramesPerSecond = xp.GetInt(rootnode + "FramesPerSecond", 0);
+            CurrentFrame = xp.GetInt(rootnode + "CurrentFrame", 0);
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityEnginev2.Engine;
+﻿using EntityEnginev2.Engine;
 using EntityEnginev2.Object;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +8,7 @@ namespace EntityEnginev2.Components
     public class Emitter : Component
     {
         public Texture2D Texture { get; protected set; }
+
         public Vector2 TileSize { get; protected set; }
 
         public bool AutoEmit;
@@ -48,5 +45,7 @@ namespace EntityEnginev2.Components
         {
             return LastID++;
         }
+
+        //TODO: Add XMLParsing
     }
 }

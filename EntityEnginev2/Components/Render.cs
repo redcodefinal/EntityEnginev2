@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,34 +24,15 @@ namespace EntityEnginev2.Components
         {
         }
 
-        public override void ParseXml(Data.XmlParser xp, string path)
+        public override void ParseXml(XmlParser xp, string path)
         {
             base.ParseXml(xp, path);
 
             string rootnode = path + "->" + Name + "->";
-            try
-            {
-                Color = xp.GetColor(rootnode + "Color");
-            }
-            catch { }
-
-            try
-            {
-                Alpha = xp.GetFloat(rootnode + "Alpha");
-            }
-            catch { }
-
-            try
-            {
-                Scale = xp.GetVector2(rootnode + "Scale");
-            }
-            catch { }
-
-            try
-            {
-                Layer = xp.GetFloat(rootnode + "Layer");
-            }
-            catch { }
+            Color = xp.GetColor(rootnode + "Color", Color.White);
+            Alpha = xp.GetFloat(rootnode + "Alpha", 1);
+            Scale = xp.GetVector2(rootnode + "Scale", Vector2.One);
+            Layer = xp.GetFloat(rootnode + "Layer", .5f);
         }
     }
 }

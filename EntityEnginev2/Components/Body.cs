@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityEnginev2.Data;
+﻿using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 
@@ -28,18 +24,8 @@ namespace EntityEnginev2.Components
         {
             base.ParseXml(xp, path);
             string rootnode = path + "->" + Name + "->";
-            try
-            {
-                Position = xp.GetVector2(rootnode + "Position");
-            }
-            catch { }
-
-            try
-            {
-                Angle = xp.GetFloat(rootnode + "Angle");
-            }
-            catch { }
-
+            Position = xp.GetVector2(rootnode + "Position", Vector2.Zero);
+            Angle = xp.GetFloat(rootnode + "Angle", 0);
         }
     }
 }

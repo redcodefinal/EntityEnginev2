@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
@@ -21,11 +19,12 @@ namespace EntityEnginev2.Components
         {
             get { return (CollidedWith.Count > 0); }
         }
+
         public Rectangle BoundingBox
         {
             get
             {
-                Vector2 position = Entity.GetComponent<Body>().Position;;
+                Vector2 position = Entity.GetComponent<Body>().Position; ;
                 Vector2 scale;
                 try
                 {
@@ -39,11 +38,10 @@ namespace EntityEnginev2.Components
                 return new Rectangle(
                     (int)(Bounds.X + position.X),
                     (int)(Bounds.Y + position.Y),
-                    (int) (Bounds.Width * scale.X),
-                    (int) (Bounds.Height * scale.Y));
+                    (int)(Bounds.Width * scale.X),
+                    (int)(Bounds.Height * scale.Y));
             }
         }
-
 
         public event Entity.EntityEventHandler CollideEvent;
 
@@ -59,7 +57,6 @@ namespace EntityEnginev2.Components
             catch (Exception)
             {
                 Bounds = new Rectangle();
-                Error.Warning("Collision.Bounds not set", Entity);
             }
         }
 
@@ -84,18 +81,21 @@ namespace EntityEnginev2.Components
             if (Debug)
             {
                 Rectangle drawwindow;
-                //Draw top 
+                //Draw top
                 drawwindow = new Rectangle(BoundingBox.X, BoundingBox.Y, BoundingBox.Width, 1);
-                sb.Draw(Assets.Pixel, drawwindow, DebugColor);
-                //Draw bottom 
+                sb.Draw(Assets.Pixel, drawwindow, null, DebugColor, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+                //Draw bottom
                 drawwindow = new Rectangle(BoundingBox.X, BoundingBox.Bottom, BoundingBox.Width, 1);
-                sb.Draw(Assets.Pixel, drawwindow, DebugColor);
-                //Draw left 
+                sb.Draw(Assets.Pixel, drawwindow, null, DebugColor, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+                //Draw left
                 drawwindow = new Rectangle(BoundingBox.X, BoundingBox.Y, 1, BoundingBox.Height);
-                sb.Draw(Assets.Pixel, drawwindow, DebugColor);
-                //Draw right 
+                sb.Draw(Assets.Pixel, drawwindow, null, DebugColor, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+                //Draw right
                 drawwindow = new Rectangle(BoundingBox.Right, BoundingBox.Y, 1, BoundingBox.Height);
-                sb.Draw(Assets.Pixel, drawwindow, DebugColor);
+                sb.Draw(Assets.Pixel, drawwindow, null, DebugColor, 0, Vector2.Zero, SpriteEffects.None, 1f);
             }
         }
 
@@ -132,21 +132,9 @@ namespace EntityEnginev2.Components
         {
             base.ParseXml(xp, path);
             string rootnode = path + "->" + Name + "->";
-            try
-            {
-                Debug = xp.GetBool(rootnode + "Debug");
-            }
-            catch{}
-            try
-            {
-                DebugColor = xp.GetColor(rootnode + "DebugColor");
-            }
-            catch { }
-            try
-            {
-                Bounds = xp.GetRectangle(rootnode + "Bounds");
-            }
-            catch { }
+            Debug = xp.GetBool(rootnode + "Debug", false);
+            DebugColor = xp.GetColor(rootnode + "DebugColor", Color.PowderBlue);
+            Bounds = xp.GetRectangle(rootnode + "Bounds", new Rectangle());
         }
     }
 }

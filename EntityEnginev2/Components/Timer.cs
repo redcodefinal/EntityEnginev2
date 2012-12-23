@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityEnginev2.Data;
+﻿using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 
 namespace EntityEnginev2.Components
@@ -40,6 +36,7 @@ namespace EntityEnginev2.Components
         public int Milliseconds { get; set; }
 
         private bool _tr;
+
         public bool TimeReached
         {
             get { return _tr; }
@@ -131,20 +128,11 @@ namespace EntityEnginev2.Components
             base.ParseXml(xp, path);
             string rootnode = path + "->" + Name + "->";
 
-            try
+            Milliseconds = xp.GetInt(rootnode + "Milliseconds", 0);
+            if (xp.GetBool(rootnode + "StartAfterCreation", false))
             {
-                Milliseconds = xp.GetInt(rootnode + "Milliseconds");
+                Start();
             }
-            catch { }
-
-            try
-            {
-                if (xp.GetBool(rootnode + "StartAfterCreation"))
-                {
-                    Start();
-                }
-            }
-            catch { }
         }
     }
 }

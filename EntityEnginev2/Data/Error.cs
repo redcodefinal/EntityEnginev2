@@ -20,9 +20,8 @@ namespace EntityEnginev2.Data
         public static void Exception(string message)
         {
             Console.WriteLine("Error: " + message);
-            if(!SupressErrors)
+            if (!SupressErrors)
                 throw new Exception(message);
-
         }
 
         public static void Exception(string message, Entity sender)

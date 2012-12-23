@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityEnginev2.Data;
+﻿using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 
 namespace EntityEnginev2.Components
@@ -50,11 +46,7 @@ namespace EntityEnginev2.Components
         {
             base.ParseXml(xp, path);
             string rootnode = path + "->" + Name + "->";
-            try
-            {
-                HitPoints = xp.GetInt(rootnode + "HitPoints");
-            }
-            catch{}
+            HitPoints = xp.GetInt(rootnode + "HitPoints", 1);
         }
     }
 }

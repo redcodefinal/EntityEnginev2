@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using EntityEnginev2.Engine;
+using Microsoft.Xna.Framework.Input;
 
 namespace EntityEnginev2.Input
 {
@@ -20,7 +21,8 @@ namespace EntityEnginev2.Input
             }
         }
 
-        public KeyboardInput(Keys key)
+        public KeyboardInput(Entity e, string name, Keys key)
+            : base(e, name)
         {
             _key = key;
         }

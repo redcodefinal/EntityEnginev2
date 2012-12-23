@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using EntityEnginev2.Engine;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace EntityEnginev2.Input
@@ -31,7 +32,7 @@ namespace EntityEnginev2.Input
             }
         } //Read-Only
 
-        public GamePadInput(Buttons button, PlayerIndex pi)
+        public GamePadInput(Entity e, string name, Buttons button, PlayerIndex pi) : base(e, name)
         {
             _button = button;
             _pi = pi;

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
@@ -43,7 +40,7 @@ namespace EntityEnginev2.Components
 
         public void FaceVelocity()
         {
-            Entity.GetComponent<Body>().Angle = (float)Math.Atan2(Velocity.X, Velocity.Y);
+            Entity.GetComponent<Body>().Angle = (float)Math.Atan2(Velocity.X, -Velocity.Y);
         }
 
         public void FaceVelocity(Vector2 velocity)
@@ -53,25 +50,11 @@ namespace EntityEnginev2.Components
 
         public override void ParseXml(XmlParser xp, string path)
         {
+            base.ParseXml(xp, path);
             string rootnode = path + "->" + Name + "->";
-
-            try
-            {
-                Drag = xp.GetFloat(rootnode + "Drag");
-            }
-            catch { }
-
-            try
-            {
-                AngularVelocity = xp.GetFloat(rootnode + "AngularVelocity");
-            }
-            catch { }
-
-            try
-            {
-                Velocity = xp.GetVector2(rootnode + "Velocity");
-            }
-            catch { }
+            Drag = xp.GetFloat(rootnode + "Drag", 1);
+            AngularVelocity = xp.GetFloat(rootnode + "AngularVelocity", 0);
+            Velocity = xp.GetVector2(rootnode + "Velocity", Vector2.Zero);
         }
     }
 }

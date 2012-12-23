@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EntityEnginev2.Components;
+﻿using EntityEnginev2.Components;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 
@@ -10,8 +6,10 @@ namespace EntityEnginev2.Object
 {
     public class Particle : Entity
     {
-         public int TimeToLive { get; set; }
+        public int TimeToLive { get; set; }
+
         public int MaxTimeToLive { get; private set; }
+
         public Emitter Emitter;
         public TileRender TileRender;
         public Body Body;
@@ -20,11 +18,10 @@ namespace EntityEnginev2.Object
         public Particle(int index, Vector2 position, int ttl, Emitter e)
             : base(e.Entity.StateRef, e.Name + ".Particle" + e.GetID())
         {
-            
             Body = new Body(this, "Body", position);
             AddComponent(Body);
 
-            TileRender = new TileRender(this, "TileRender",e.Texture, e.TileSize);
+            TileRender = new TileRender(this, "TileRender", e.Texture, e.TileSize);
             TileRender.Index = index;
             AddComponent(TileRender);
 
