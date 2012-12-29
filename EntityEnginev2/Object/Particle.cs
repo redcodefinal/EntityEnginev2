@@ -16,8 +16,10 @@ namespace EntityEnginev2.Object
         public Physics Physics;
 
         public Particle(int index, Vector2 position, int ttl, Emitter e)
-            : base(e.Entity.StateRef, e.Name + ".Particle" + e.GetID())
+            : base(e.Entity.StateRef, e.Name + ".Particle")
         {
+            Name = Name + ID;
+
             Body = new Body(this, "Body", position);
             AddComponent(Body);
 

@@ -19,7 +19,8 @@ namespace EntityEnginev2.Engine
         public EntityEventHandler CreateEvent;
         public EntityEventHandler DestroyEvent;
 
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
+        public int ID { get; private set; }
 
         public EntityState StateRef { get; private set; }
 
@@ -27,6 +28,7 @@ namespace EntityEnginev2.Engine
         {
             Name = name;
             StateRef = es;
+            ID = es.GetID();
         }
 
         public T GetComponent<T>(string name) where T : Component
@@ -89,6 +91,10 @@ namespace EntityEnginev2.Engine
             if (CreateEvent != null)
                 CreateEvent(e);
         }
+        public void Destroy()
+        {
+            Destroy(null);
+        }
 
         public virtual void Destroy(Entity e = null)
         {
@@ -99,11 +105,6 @@ namespace EntityEnginev2.Engine
 
             if (DestroyEvent != null)
                 DestroyEvent(this);
-        }
-
-        public void Destroy()
-        {
-            Destroy(null);
         }
 
         public virtual void ParseXml(XmlParser xp)

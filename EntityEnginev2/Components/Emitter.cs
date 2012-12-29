@@ -1,4 +1,5 @@
-﻿using EntityEnginev2.Engine;
+﻿using EntityEnginev2.Data;
+using EntityEnginev2.Engine;
 using EntityEnginev2.Object;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +15,9 @@ namespace EntityEnginev2.Components
         public bool AutoEmit;
         public int EmitAmount = 1;
 
-        public int LastID { get; private set; }
+        public Emitter(Entity entity, string name) : base(entity, name)
+        {
+        }
 
         public Emitter(Entity e, string name, Texture2D texture, Vector2 tilesize)
             : base(e, name)
@@ -41,11 +44,13 @@ namespace EntityEnginev2.Components
                 Entity.AddEntity(GenerateNewParticle());
         }
 
-        public int GetID()
+        public override void ParseXml(XmlParser xp, string path)
         {
-            return LastID++;
+            base.ParseXml(xp, path);
+            string rootnode = path + "->" + Name;
+            Texture = Entity.StateRef.GameRef.Game.Content.Load<Texture2D>(
+                xp.GetString(rootnode + "->Texture", "TextureNotSet"));
+            TileSize = xp.GetVector2(rootnode + "->TileSize", Vector2.Zero);
         }
-
-        //TODO: Add XMLParsing
     }
 }

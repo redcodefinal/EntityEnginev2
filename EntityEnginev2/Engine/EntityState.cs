@@ -19,6 +19,8 @@ namespace EntityEnginev2.Engine
 
         public EntityGame GameRef { get; private set; }
 
+        public int LastID { get; private set; }
+
         public EntityState(EntityGame stg, string name)
         {
             GameRef = stg;
@@ -106,6 +108,11 @@ namespace EntityEnginev2.Engine
         public void Show()
         {
             GameRef.CurrentState = this;
+        }
+
+        public int GetID()
+        {
+            return LastID++;
         }
     }
 }

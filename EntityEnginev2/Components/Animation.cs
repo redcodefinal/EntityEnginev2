@@ -133,6 +133,8 @@ namespace EntityEnginev2.Components
             TileSize = xp.GetVector2(rootnode + "TileSize", Vector2.Zero);
             FramesPerSecond = xp.GetInt(rootnode + "FramesPerSecond", 0);
             CurrentFrame = xp.GetInt(rootnode + "CurrentFrame", 0);
+            if (xp.GetBool(rootnode + "StartAfterCreation", false))
+                Start();
         }
     }
 }
