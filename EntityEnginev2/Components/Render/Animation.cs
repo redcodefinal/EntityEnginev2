@@ -1,10 +1,9 @@
-﻿using System;
-using EntityEnginev2.Data;
+﻿using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace EntityEnginev2.Components
+namespace EntityEnginev2.Components.Render
 {
     public class Animation : ImageRender
     {
@@ -59,11 +58,6 @@ namespace EntityEnginev2.Components
                     return new Rectangle();
                 }
             }
-        }
-
-        public override Vector2 Bounds
-        {
-            get { return new Vector2(TileSize.X, TileSize.Y); }
         }
 
         public Animation(Entity e, string name, Texture2D texture, Vector2 tileSize, int framesPerSecond)

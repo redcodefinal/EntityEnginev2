@@ -11,6 +11,7 @@ namespace EntityEnginev2.Components
         public float AngularVelocityDrag = 1f;
         public Vector2 Velocity = Vector2.Zero;
         public float Drag = 1f;
+        public Vector2 Acceleration = Vector2.Zero;
 
         public Physics(Entity e, string name)
             : base(e, name)
@@ -19,6 +20,7 @@ namespace EntityEnginev2.Components
 
         public override void Update()
         {
+            Velocity += Acceleration;
             Velocity *= Drag;
             AngularVelocity *= AngularVelocityDrag;
 
@@ -51,10 +53,22 @@ namespace EntityEnginev2.Components
         public override void ParseXml(XmlParser xp, string path)
         {
             base.ParseXml(xp, path);
-            string rootnode = path + "->" + Name + "->";
-            Drag = xp.GetFloat(rootnode + "Drag", 1);
-            AngularVelocity = xp.GetFloat(rootnode + "AngularVelocity", 0);
-            Velocity = xp.GetVector2(rootnode + "Velocity", Vector2.Zero);
+            string rootnode = path + "->" + Name;
+            Drag = xp.GetFloat(rootnode + "->Drag", Drag);
+            AngularVelocity = xp.GetFloat(rootnode + "->AngularVelocity", AngularVelocity);
+            Velocity = xp.GetVector2(rootnode + "->Velocity", Velocity);
+            Acceleration = xp.GetVector2(rootnode + "->Acceleration", Acceleration);
+        }
+
+        public Physics Clone()
+        {
+            Physics p = new Physics(Entity, Name);
+            p.AngularVelocity = AngularVelocity;
+            p.AngularVelocityDrag = AngularVelocityDrag;
+            p.Drag = Drag;
+            p.Velocity = Velocity;
+            p.Acceleration = Acceleration;
+            return p;
         }
     }
 }

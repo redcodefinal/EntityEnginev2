@@ -1,4 +1,5 @@
 ﻿using EntityEnginev2.Components;
+using EntityEnginev2.Components.Render;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 
@@ -26,6 +28,15 @@ namespace EntityEnginev2.Data
             return GetElementPath(parent) + "->" + element.Name.LocalName;
         }
 
+        public string[] GetAllDesendents(string path)
+        {
+            string[] splitpath = Regex.Split(path, "->");
+
+            XElement e = splitpath.Skip(1).Aggregate(XmlFile.Root, (current, s) => current.Element(s));
+
+            return e.Elements().Select(element => element.Name.ToString()).ToArray();
+        }
+
         public void ParseElements()
         {
             Elements = new Dictionary<string, string>();
@@ -39,9 +50,23 @@ namespace EntityEnginev2.Data
             }
         }
 
-        public bool CheckElement(string tag)
+        public bool CheckElement(string path)
         {
-            return Elements.ContainsKey(tag);
+            string[] splitpath = Regex.Split(path, "->");
+            XElement e = XmlFile.Root;
+
+            if (e.Name != splitpath[0])
+                return false;
+
+            foreach (string s in splitpath.Skip(1))
+            {
+                if (e == null)
+                    return false;
+                e = e.Element(s);
+            }
+            if (e == null)
+                return false;
+            return true;
         }
 
         public string GetString(string tag)

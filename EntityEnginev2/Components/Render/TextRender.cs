@@ -3,9 +3,9 @@ using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace EntityEnginev2.Components
+namespace EntityEnginev2.Components.Render
 {
-    public class TextRender : Render
+    public class TextRender : BaseRender
     {
         public string Text;
         public SpriteFont Font;

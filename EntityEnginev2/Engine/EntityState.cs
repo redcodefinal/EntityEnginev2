@@ -31,7 +31,15 @@ namespace EntityEnginev2.Engine
         {
             var result = this.FirstOrDefault(entity => entity.Name == name);
             if (result == null)
-                Error.Exception("Entity" + name + " does not exist!");
+                Error.Exception("Entity " + name + " does not exist!");
+            return (T)result;
+        }
+
+        public T GetEntity<T>(int id) where T : Entity
+        {
+            var result = this.FirstOrDefault(entity => entity.ID == id);
+            if (result == null)
+                Error.Exception("Entity ID " + id + " does not exist!");
             return (T)result;
         }
 

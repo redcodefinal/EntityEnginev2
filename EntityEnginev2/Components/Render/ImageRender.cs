@@ -3,12 +3,11 @@ using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace EntityEnginev2.Components
+namespace EntityEnginev2.Components.Render
 {
-    public class ImageRender : Render
+    public class ImageRender : BaseRender
     {
         public Texture2D Texture { get; set; }
-
         public override Rectangle DrawRect
         {
             get
@@ -30,9 +29,9 @@ namespace EntityEnginev2.Components
             }
         }
 
-        public override Vector2 Bounds
+        public override Rectangle SourceRect
         {
-            get { return new Vector2(Texture.Width, Texture.Height); }
+            get { return new Rectangle(0, 0, Texture.Width, Texture.Height); }
         }
 
         public ImageRender(Entity e, string name)
@@ -50,15 +49,8 @@ namespace EntityEnginev2.Components
 
         public override void Draw(SpriteBatch sb)
         {
-            try
-            {
-                sb.Draw(Texture, DrawRect, null, Color * Alpha, Entity.GetComponent<Body>().Angle,
-                        Origin, Flip, Layer);
-            }
-            catch
-            {
-                Error.Exception("Body should not be null!", Entity);
-            }
+            sb.Draw(Texture, DrawRect, null, Color * Alpha, Entity.GetComponent<Body>().Angle,
+                    Origin, Flip, Layer);
         }
 
         public void LoadTexture(string location)
@@ -69,8 +61,12 @@ namespace EntityEnginev2.Components
         public override void ParseXml(XmlParser xp, string path)
         {
             base.ParseXml(xp, path);
-            string rootnode = path + "->" + Name + "->";
-            LoadTexture(xp.GetString(rootnode + "Texture", "TextureNotSet"));
+            string rootnode = path + "->" + Name;
+
+            if(xp.CheckElement(rootnode + "->Texture"))
+            {
+                LoadTexture(xp.GetString(rootnode + "->Texture", "TEXTURENOTSET"));
+            }
         }
     }
 }

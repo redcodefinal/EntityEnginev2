@@ -92,20 +92,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Animation.cs" />
+    <Compile Include="Components\Render\Animation.cs" />
     <Compile Include="Components\Body.cs" />
-    <Compile Include="Components\Collision.cs" />
+    <Compile Include="Components\Collision\Collision.cs" />
     <Compile Include="Components\Emitter.cs" />
     <Compile Include="Components\Health.cs" />
-    <Compile Include="Components\ImageRender.cs" />
+    <Compile Include="Components\Render\ImageRender.cs" />
+    <Compile Include="Components\Collision\PerColorCollision.cs" />
     <Compile Include="Components\Physics.cs" />
-    <Compile Include="Components\Render.cs" />
+    <Compile Include="Components\Render\BaseRender.cs" />
     <Compile Include="Components\Sound.cs" />
-    <Compile Include="Components\TextRender.cs" />
-    <Compile Include="Components\TileRender.cs" />
+    <Compile Include="Components\Render\TextRender.cs" />
+    <Compile Include="Components\Render\TileRender.cs" />
     <Compile Include="Components\Timer.cs" />
     <Compile Include="Data\Assets.cs" />
-    <Compile Include="Data\RandomExtentions.cs" />
+    <Compile Include="Data\Extensions.cs" />
     <Compile Include="Engine\Component.cs" />
     <Compile Include="Engine\Entity.cs" />
     <Compile Include="Data\Error.cs" />

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
+using EntityEnginev2.Components.Render;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace EntityEnginev2.Components
+namespace EntityEnginev2.Components.Collision
 {
     public class Collision : Component
     {
@@ -28,7 +29,7 @@ namespace EntityEnginev2.Components
                 Vector2 scale;
                 try
                 {
-                    scale = Entity.GetComponent<Render>().Scale;
+                    scale = Entity.GetComponent<BaseRender>().Scale;
                 }
                 catch
                 {
@@ -50,8 +51,8 @@ namespace EntityEnginev2.Components
         {
             try
             {
-                var width = (int)Entity.GetComponent<Render>().Bounds.X;
-                var height = (int)Entity.GetComponent<Render>().Bounds.Y;
+                var width = Entity.GetComponent<BaseRender>().DrawRect.Width;
+                var height = Entity.GetComponent<BaseRender>().DrawRect.Height;
                 Bounds = new Rectangle(0, 0, width, height);
             }
             catch (Exception)
@@ -63,7 +64,7 @@ namespace EntityEnginev2.Components
         public override void Update()
         {
             //Erase the collided with list every frame
-            CollidedWith = new List<Entity>();
+            CollidedWith.Clear();
             foreach (var p in Partners.ToArray())
             {
                 if (TestCollision(p))

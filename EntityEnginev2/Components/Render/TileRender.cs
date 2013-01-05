@@ -1,10 +1,9 @@
-﻿using System;
-using EntityEnginev2.Data;
+﻿using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace EntityEnginev2.Components
+namespace EntityEnginev2.Components.Render
 {
     public class TileRender : ImageRender
     {

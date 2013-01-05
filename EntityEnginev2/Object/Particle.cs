@@ -1,4 +1,5 @@
 ﻿using EntityEnginev2.Components;
+using EntityEnginev2.Components.Render;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 
@@ -11,7 +12,7 @@ namespace EntityEnginev2.Object
         public int MaxTimeToLive { get; private set; }
 
         public Emitter Emitter;
-        public TileRender TileRender;
+        public TileRender TileBaseRender;
         public Body Body;
         public Physics Physics;
 
@@ -23,9 +24,9 @@ namespace EntityEnginev2.Object
             Body = new Body(this, "Body", position);
             AddComponent(Body);
 
-            TileRender = new TileRender(this, "TileRender", e.Texture, e.TileSize);
-            TileRender.Index = index;
-            AddComponent(TileRender);
+            TileBaseRender = new TileRender(this, "TileRender", e.Texture, e.TileSize);
+            TileBaseRender.Index = index;
+            AddComponent(TileBaseRender);
 
             Physics = new Physics(this, "Physics");
             AddComponent(Physics);
@@ -60,7 +61,7 @@ namespace EntityEnginev2.Object
             base.Update();
             if (TimeToLive < FadeAge)
             {
-                TileRender.Alpha -= 1f / FadeAge;
+                TileBaseRender.Alpha -= 1f / FadeAge;
             }
         }
     }

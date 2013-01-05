@@ -1,4 +1,5 @@
-﻿using EntityEnginev2.Data;
+﻿using System;
+using EntityEnginev2.Data;
 using EntityEnginev2.Engine;
 using Microsoft.Xna.Framework;
 
@@ -26,6 +27,14 @@ namespace EntityEnginev2.Components
             string rootnode = path + "->" + Name + "->";
             Position = xp.GetVector2(rootnode + "Position", Vector2.Zero);
             Angle = xp.GetFloat(rootnode + "Angle", 0);
+        }
+
+        public Body Clone()
+        {
+            var b = new Body(Entity, Name);
+            b.Position = Position;
+            b.Angle = Angle;
+            return b;
         }
     }
 }

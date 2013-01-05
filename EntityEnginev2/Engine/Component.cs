@@ -45,9 +45,9 @@ namespace EntityEnginev2.Engine
 
         public virtual void ParseXml(XmlParser xp, string path)
         {
-            string rootnode = path + "->" + Name + "->";
-            Active = xp.GetBool(rootnode + "Active", true);
-            Default = xp.GetBool(rootnode + "Default", false);
+            string rootnode = path + "->" + Name;
+            Active = xp.GetBool(rootnode + "->Active", Active);
+            Default = xp.GetBool(rootnode + "->Default", Default);
         }
     }
 }
